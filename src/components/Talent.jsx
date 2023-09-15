@@ -2,30 +2,25 @@
 import { useState } from 'react'
 import Image from 'next/image'
 
-const Talent = () => {
-  const isPurchased = false
-  const imgSrcEnabled = "/assets/sprites/stack-enabled.png"
-  const imgSrcDisabled = "/assets/sprites/stack-disabled.png"
+const Talent = ({
+  isPurchased, sprite, prereqMet
+}) => {
   const imgSize = 50
+  const imgSrc = "/assets/sprites/" + sprite + "-" + (isPurchased ? "enabled.png": "disabled.png")
 
   return (
-    <div>
-      {isPurchased ? (
+    <>
+      <button
+        type="button"
+        disabled={!prereqMet}>
         <Image
-          src={imgSrcEnabled}
+          src={imgSrc}
           alt="Temporary alt text"
           width={imgSize}
           height={imgSize}
         />
-      ) : (
-        <Image
-          src={imgSrcDisabled}
-          alt="Temporary alt text"
-          width={imgSize}
-          height={imgSize}
-        />
-      )}
-    </div>
+      </button>
+    </>
   )
 }
 

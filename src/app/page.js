@@ -8,7 +8,7 @@ export default function Home() {
     <main>
       <h1>Rune Mastery Loadout</h1>
       <section>
-        <Talent />
+        <TalentTrack />
         <TalentTrack />
         <PointCounter />
       </section>

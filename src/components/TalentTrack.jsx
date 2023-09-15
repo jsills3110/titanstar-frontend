@@ -1,6 +1,16 @@
+'use client'
+import Talent from '@components/Talent'
+
 const TalentTrack = () => {
+
   return (
-    <div>Talent Track</div>
+    <>
+      <Talent
+        isPurchased={true}
+        sprite="stack"
+        prereqMet={true}
+      />
+    </>
   )
 }
 
