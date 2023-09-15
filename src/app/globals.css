@@ -14,7 +14,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background-image: url('../../public/assets/talent-calc-bg-1920.png');
+  background-image: url('../../public/assets/images/talent-calc-bg-1920.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;

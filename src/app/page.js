@@ -1,12 +1,17 @@
 import Image from 'next/image'
-import Link from 'next/Link'
+import Talent from '@components/Talent';
+import TalentTrack from '@components/TalentTrack';
+import PointCounter from '@components/PointCounter';
 
 export default function Home() {
   return (
-    <>
-      <header>
-        <Link href="/">TitanStar Legends</Link>
-      </header>
-    </>
+    <main>
+      <h1>Rune Mastery Loadout</h1>
+      <section>
+        <Talent />
+        <TalentTrack />
+        <PointCounter />
+      </section>
+    </main>
   )
 }
