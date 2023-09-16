@@ -10,7 +10,7 @@ export const metadata = {
   description: 'Rune mastery loadout for TitanStar Legends.',
 }
 
-// Set the global site layout. In this case, all pages will have the same
+// Set the global site layout. All pages will have the same
 // Header and Footer.
 export default function RootLayout({ children }) {
   return (
