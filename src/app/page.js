@@ -1,13 +1,16 @@
-import Image from 'next/image'
+'use client'
+import { useState } from 'react'
+import { useEffect } from 'react'
 import TalentTrack from '@components/TalentTrack'
 import PointCounter from '@components/PointCounter'
+import InitializeStorage from '../utils/initalizeStorage'
 
 export default function Home() {
 
   // Setting the Talent Track data.
   // In a full stack application, I would retrieve this information via API, NOT hardcode it into the application.
-  // I'm also making an assumption that I would receive the talents in the order they need to appear in on the 
-  // tracks, to simplify my logic.
+  // I'm also making an assumption that I would receive the talents in the order they need to appear on the tracks
+  // to simplify my logic.
   const TalentTrackData = {
     talentPath1: [
       {
@@ -63,25 +66,23 @@ export default function Home() {
     ]
   }
 
-  TalentTrackData.talentPath1[0].isPurchased = true
-  TalentTrackData.talentPath1[1].isPurchased = false
-  TalentTrackData.talentPath1[2].isPurchased = false
-  TalentTrackData.talentPath1[3].isPurchased = false
+  const [trackState, setTrackState] = useState()
 
-  TalentTrackData.talentPath2[0].isPurchased = true
-  TalentTrackData.talentPath2[1].isPurchased = true
-  TalentTrackData.talentPath2[2].isPurchased = false
-  TalentTrackData.talentPath2[3].isPurchased = false
+  // Initialize the track state if it does not exist yet.
+  // In a full stack application, I would retrieve this information via API, not use localStorage.
+  useEffect(() => {
+    const fetchState = async () => {
+      if (typeof window !== "undefined" && window.localStorage) {
+        if (!localStorage.getItem("trackState")) {
+          await InitializeStorage()
+        }
+        let currentTrackState = JSON.parse(localStorage.getItem("trackState"))
+        setTrackState(currentTrackState)
+      }
+    }
 
-  TalentTrackData.talentPath1[0].prereqMet = true
-  TalentTrackData.talentPath1[1].prereqMet = true
-  TalentTrackData.talentPath1[2].prereqMet = false
-  TalentTrackData.talentPath1[3].prereqMet = false
-
-  TalentTrackData.talentPath2[0].prereqMet = true
-  TalentTrackData.talentPath2[1].prereqMet = true
-  TalentTrackData.talentPath2[2].prereqMet = true
-  TalentTrackData.talentPath2[3].prereqMet = false
+    fetchState().catch(console.error)
+  }, [])
 
   return (
     <main>
@@ -89,9 +90,11 @@ export default function Home() {
       <section>
         <TalentTrack
           talentTrackData={TalentTrackData.talentPath1}
+          trackState={trackState.talentPath1}
         />
         <TalentTrack
           talentTrackData={TalentTrackData.talentPath2}
+          trackState={trackState.talentPath2}
         />
         <PointCounter />
       </section>

@@ -1,20 +1,25 @@
 'use client'
 import { useState } from 'react'
 import { useCallback } from 'react'
-import { useEffect } from 'react'
 import Image from 'next/image'
 
-const Talent = ({talent}) => {
-  const imgSize = 50
-  const imgSrc = "/assets/sprites/" + talent.sprite + "-" + (talent.isPurchased ? "enabled.png": "disabled.png")
-
+const Talent = ({ talent, talentState }) => {
   // Creating loaders for purchasing and removing talents.
   // These are not totally necessary since I'm not making calls to a server, but this is what I might do if I were.
   const [purchasing, setIsPurchasing] = useState(false)
   const [removing, setIsRemoving] = useState(false)
 
+  // UseState for isPurchased and isPrereqMet since these may change.
+  const [isPurchased, setIsPurchased] = useState(talentState.isPurchased)
+  const [isPrereqMet, setIsPrereqMet] = useState(talentState.prereqMet)
+
+  const imgSize = 50
+  // Need to change this to use the state for isPurchased?
+  const imgSrc = "/assets/sprites/" + talent.sprite + "-" + (talentState.isPurchased ? "enabled.png" : "disabled.png")
+
   const purchaseTalent = useCallback((e) => {
     setIsPurchasing(true)
+    console.log(e)
     try {
       console.log("Purchasing Talent")
     } catch (error) {
@@ -40,20 +45,14 @@ const Talent = ({talent}) => {
     [setIsRemoving]
   )
 
-  useEffect(() => {
-    document.addEventListener("click", purchaseTalent)
-    document.addEventListener("contextmenu", removeTalent)
-    return () => {
-      document.removeEventListener("click", purchaseTalent)
-      document.removeEventListener("contextmenu", removeTalent)
-    }
-  },[purchaseTalent, removeTalent])
-
   return (
     <>
       <button
         type="button"
-        disabled={!talent.prereqMet}>
+        disabled={!talentState.prereqMet}
+        onClick={e => purchaseTalent(e, talentState.isPurchased, talentState.prereqMet)}
+        onContextMenu={e => removeTalent(e, talentState.isPurchased)}
+      >
         <Image
           src={imgSrc}
           alt={talent.altText}
