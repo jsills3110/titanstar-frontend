@@ -4,18 +4,20 @@ import { useCallback } from 'react'
 import Image from 'next/image'
 
 const Talent = ({ talent, talentState }) => {
+
+  console.log(talentState)
   // Creating loaders for purchasing and removing talents.
   // These are not totally necessary since I'm not making calls to a server, but this is what I might do if I were.
   const [purchasing, setIsPurchasing] = useState(false)
   const [removing, setIsRemoving] = useState(false)
 
   // UseState for isPurchased and isPrereqMet since these may change.
-  const [isPurchased, setIsPurchased] = useState(talentState.isPurchased)
-  const [isPrereqMet, setIsPrereqMet] = useState(talentState.prereqMet)
+  const [isPurchased, setIsPurchased] = useState(talentState ? talentState.isPurchased : false)
+  const [isPrereqMet, setIsPrereqMet] = useState(talentState ? talentState.prereqMet : false)
 
   const imgSize = 50
   // Need to change this to use the state for isPurchased?
-  const imgSrc = "/assets/sprites/" + talent.sprite + "-" + (talentState.isPurchased ? "enabled.png" : "disabled.png")
+  const imgSrc = "/assets/sprites/" + talent.sprite + "-" + (talentState ? (talentState.isPurchased ? "enabled.png" : "disabled.png") : "disabled.png")
 
   const purchaseTalent = useCallback((e) => {
     setIsPurchasing(true)
@@ -49,9 +51,9 @@ const Talent = ({ talent, talentState }) => {
     <>
       <button
         type="button"
-        disabled={!talentState.prereqMet}
-        onClick={e => purchaseTalent(e, talentState.isPurchased, talentState.prereqMet)}
-        onContextMenu={e => removeTalent(e, talentState.isPurchased)}
+        disabled={talentState ? !talentState.prereqMet : false}
+        onClick={e => purchaseTalent(e)}
+        onContextMenu={e => removeTalent(e)}
       >
         <Image
           src={imgSrc}

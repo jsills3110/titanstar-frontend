@@ -66,7 +66,7 @@ export default function Home() {
     ]
   }
 
-  const [trackState, setTrackState] = useState()
+  const [trackState, setTrackState] = useState({})
 
   // Initialize the track state if it does not exist yet.
   // In a full stack application, I would retrieve this information via API, not use localStorage.
@@ -83,6 +83,8 @@ export default function Home() {
 
     fetchState().catch(console.error)
   }, [])
+
+  console.log(trackState)
 
   return (
     <main>
