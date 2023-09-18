@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import TalentTrack from '@components/TalentTrack'
 import PointCounter from '@components/PointCounter'
-import InitializeStorage from '../utils/initalizeStorage'
+import InitializeStorage from '../utils/initializeStorage'
 
 export default function Home() {
 
@@ -93,10 +93,12 @@ export default function Home() {
         <TalentTrack
           talentTrackData={TalentTrackData.talentPath1}
           trackState={trackState.talentPath1}
+          trackNumber={1}
         />
         <TalentTrack
           talentTrackData={TalentTrackData.talentPath2}
           trackState={trackState.talentPath2}
+          trackNumber={2}
         />
         <PointCounter />
       </section>
